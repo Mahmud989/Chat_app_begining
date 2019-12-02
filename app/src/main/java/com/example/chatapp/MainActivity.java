@@ -35,7 +35,7 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void onClick(View v) {
-                txtView.setText("Go Back");
+                txtView.setText("Go Ahead");
                 txtView.setTextSize(25);
                 Context context = getApplicationContext();
                 CharSequence text = "Username is " + loginText.getText().toString() +
