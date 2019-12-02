@@ -3,6 +3,7 @@ package com.example.chatapp;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.ContextThemeWrapper;
 import android.view.Gravity;
@@ -41,13 +42,19 @@ public class MainActivity extends AppCompatActivity {
                 CharSequence text = "Username is " + loginText.getText().toString() +
                         "\r\nPassword is " + passwordText.getText().toString();
                 int duration = Toast.LENGTH_SHORT;
-
+                goToAnotherActivity(v);
                 Toast toast = Toast.makeText(context, text, duration);
                 toast.show();
 //                showToast();
             }
         });
     }
+
+    public void goToAnotherActivity(View view) {
+        Intent intent = new Intent(this, HomeActivity.class);
+        startActivity(intent);
+    }
+
 
     public void showToast() {
 
