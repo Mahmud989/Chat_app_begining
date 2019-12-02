@@ -16,6 +16,8 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.chatapp.fakeservice.LoginService;
+
 public class MainActivity extends AppCompatActivity {
 
     Button b1;
@@ -23,6 +25,8 @@ public class MainActivity extends AppCompatActivity {
     EditText loginText;
     EditText passwordText;
 
+    Context context ;
+    int duration = Toast.LENGTH_SHORT;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,27 +36,44 @@ public class MainActivity extends AppCompatActivity {
         txtView = (TextView) findViewById(R.id.text);
         loginText = (EditText) findViewById(R.id.loginText);
         passwordText = (EditText) findViewById(R.id.passwordText);
+        context = getApplicationContext();
         b1.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View v) {
                 txtView.setText("Go Ahead");
                 txtView.setTextSize(25);
-                Context context = getApplicationContext();
                 CharSequence text = "Username is " + loginText.getText().toString() +
                         "\r\nPassword is " + passwordText.getText().toString();
-                int duration = Toast.LENGTH_SHORT;
-                goToAnotherActivity(v);
+
                 Toast toast = Toast.makeText(context, text, duration);
-                toast.show();
+//                toast.show();
 //                showToast();
+                login();
             }
         });
     }
 
-    public void goToAnotherActivity(View view) {
-        Intent intent = new Intent(this, HomeActivity.class);
-        startActivity(intent);
+    private void login() {
+
+        if (isNotNull(loginText)) {
+            if (isNotNull(passwordText)) {
+                if(LoginService.authUser(loginText.getText().toString(), passwordText.getText().toString())){
+                    Intent intent = new Intent(this, HomeActivity.class);
+                    startActivity(intent);
+                }else{
+                    Toast.makeText(getApplicationContext(), "Invalid user credidentals", duration).show();
+                }
+            } else {
+                Toast.makeText(getApplicationContext(), "Password is null", duration).show();
+            }
+        } else {
+            Toast.makeText(getApplicationContext(), "Username is null", duration).show();
+        }
+    }
+
+    private boolean isNotNull(EditText view) {
+        return view != null && (!view.getText().toString().isEmpty());
     }
 
 
