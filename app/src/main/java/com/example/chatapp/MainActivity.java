@@ -60,7 +60,13 @@ public class MainActivity extends AppCompatActivity {
             if (isNotNull(passwordText)) {
                 if(LoginService.authUser(loginText.getText().toString(), passwordText.getText().toString())){
                     Intent intent = new Intent(this, HomeActivity.class);
+                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                    Bundle b = new Bundle();
+                    b.putString("username", loginText.getText().toString()); //Your id
+                    b.putString("password", passwordText.getText().toString()); //Your id
+                    intent.putExtras(b); //Put your id to your next Intent
                     startActivity(intent);
+                    finish();
                 }else{
                     Toast.makeText(getApplicationContext(), "Invalid user credidentals", duration).show();
                 }
